@@ -9040,10 +9040,10 @@ tric_def_one_section (const char *name, const char *s_flags, int align,
    equips the generated section with this callback function */
 
 static void
-tric_output_section_asm_op (const void* data)
+tric_output_section_asm_op (const char *name)
 {
   unsigned int i;
-  const tric_section_t *sec = (const tric_section_t*) data;
+  const tric_section_t *sec = tric_lookup_section (name);
   char flags[20];
   tric_section_flags_from_flags (flags, sec->flags);
 
@@ -9479,7 +9479,7 @@ tric_asm_unique_section (tree decl, int reloc)
           else                      ss3 = SS_ALIGN_1;
         }
 
-	  tsec = (const tric_section_t*) tric_data_section[ss1][ss2][ss3]->unnamed.data;
+	  tsec = tric_data_section_ext[ss1][ss2][ss3];
     }
   name = IDENTIFIER_POINTER (DECL_ASSEMBLER_NAME (decl));
   name = targetm.strip_name_encoding (name);
